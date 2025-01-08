@@ -27,6 +27,7 @@ public class ThemeService {
 
 		if (themeToDelete.isPresent()) {
 			themes.remove(themeToDelete.get());
+			BookService.removeTheme(theme.getId());
 		}
 		this.getAllThemes();
 	}

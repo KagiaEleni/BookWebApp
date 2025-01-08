@@ -2,6 +2,7 @@ package com.example.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Book {
 
@@ -24,6 +25,16 @@ public class Book {
 
 	public void addATheme(Theme theme) {
 		themes.add(theme);
+	}
+	
+	public void deleteTheme(int themeId) {
+		 Optional<Theme> themeToDelete = themes.stream()
+                 .filter(theme -> theme.getId() == themeId)
+                 .findFirst();
+		 
+		 if (themeToDelete.isPresent()) {
+	            themes.remove(themeToDelete.get());
+	        }
 	}
 
 	public String toString() {

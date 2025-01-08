@@ -19,6 +19,7 @@ public class DemoApplication {
 		Theme th1 = new Theme(1,"Adventure","descr1");
 		Theme th2 = new Theme(2,"Horror","descr2");
 		Theme th3 = new Theme(3,"Comedy","descr3");
+		Theme th4 = new Theme(4,"Drama","descr3");
 		
 		Author a1 = new Author(1, "Nikos", "Pappas", "8/1/2000");
 		Author a2 = new Author(2, "Maria", "Pappa", "9/1/2000");
@@ -32,6 +33,7 @@ public class DemoApplication {
 		thService.addTheme(th1);
 		thService.addTheme(th2);
 		thService.addTheme(th3);
+		thService.addTheme(th4);
 		
 		aService.addAuthor(a1);
 		aService.addAuthor(a2);
@@ -72,7 +74,12 @@ public class DemoApplication {
 		System.out.println("____________________Change Book Author____________________");
 		System.out.println(bService.getAllBooks());
 		
-		thService.deleteTheme(th1);
+		thService.updateTheme(4, "Mystery", "descr4");
+		System.out.println("____________________Update Theme____________________");
+		System.out.println(thService.getAllThemes());
+		
+		thService.deleteTheme(th4);
+		thService.deleteTheme(th3);
 		System.out.println("____________________Delete Theme____________________");
 		System.out.println(thService.getAllThemes());
 		System.out.println(bService.getAllBooks());

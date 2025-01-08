@@ -10,7 +10,7 @@ import com.example.entities.Theme;
 
 public class BookService {
 
-	private List<Book> books = new ArrayList<Book>();
+	private static List<Book> books = new ArrayList<Book>();
 
 	// Add Book
 	public void addBook(Book book) {
@@ -67,7 +67,6 @@ public class BookService {
 		}
 	}
 
-
 	// Add a theme to a book
 	public void addTheme(int bookId, int themeID, ThemeService themeService) {
 
@@ -77,6 +76,13 @@ public class BookService {
 			if (book.getId() == bookId) {
 				book.addATheme(theme.findThemeById(themeID));
 			}
+		}
+	}
+
+	// Remove a theme from a book
+	public static void removeTheme(int themeId) {
+		for (Book book : books) {
+			book.deleteTheme(themeId);
 		}
 	}
 
