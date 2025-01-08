@@ -14,6 +14,11 @@ public class Author {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
+	public String toString() {
+        return "~~~~" + firstName + lastName + "~~~~\n" +
+                "Date of birth: " + dateOfBirth + "\n";
+    }
+	
 	//GETTERS AND SETTERS
 	public int getId() {
 		return id;

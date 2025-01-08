@@ -11,6 +11,11 @@ public class Theme {
 		this.name = name;
 		this.description = description;
 	}
+	
+	public String toString() {
+        return "~~~~" + name + "~~~~\n" +
+                "Description: " + description + "\n";
+    }
 
 	//GETTERS AND SETTERS
 	public int getId() {

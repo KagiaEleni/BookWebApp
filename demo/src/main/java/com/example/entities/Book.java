@@ -12,9 +12,8 @@ public class Book {
 	private String publishedYear;
 	private String description;
 	List<Theme> themes = new ArrayList<Theme>();
-	
+
 	public Book(int id, String title, Author author, String publisher, String publishedYear, String description) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
@@ -22,48 +21,65 @@ public class Book {
 		this.publishedYear = publishedYear;
 		this.description = description;
 	}
-	
+
 	public void addATheme(Theme theme) {
 		themes.add(theme);
 	}
-	
-	//GETTERS AND SETTERS
+
+	public String toString() {
+		return "~~~~" + title + "~~~~\n" + "Author: " + author.getFirstName() + " " + author.getLastName() + "\n" + "Description: " + description + "\n"
+				+ "Publisher: " + publisher + "\n" + "Published Year: " + publishedYear + "\n" + "Themes" + themes + "\n";
+	}
+
+	// GETTERS AND SETTERS
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public Author getAuthor() {
 		return author;
 	}
+
 	public void setAuthor(Author author) {
 		this.author = author;
 	}
+
 	public String getPublisher() {
 		return publisher;
 	}
+
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
+
 	public String getPublishedYear() {
 		return publishedYear;
 	}
+
 	public void setPublishedYear(String publishedYear) {
 		this.publishedYear = publishedYear;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public List<Theme> getThemes() {
 		return themes;
 	}
@@ -71,8 +87,5 @@ public class Book {
 	public void setThemes(List<Theme> themes) {
 		this.themes = themes;
 	}
-	
-	
-	
-	
+
 }
