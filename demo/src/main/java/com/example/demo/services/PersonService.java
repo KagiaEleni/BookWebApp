@@ -1,4 +1,4 @@
-package com.example.services;
+package com.example.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.entities.Person;
+import com.example.demo.entities.Person;
 
 @Service
 public class PersonService {

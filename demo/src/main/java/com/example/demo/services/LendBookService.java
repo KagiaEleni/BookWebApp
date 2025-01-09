@@ -1,4 +1,4 @@
-package com.example.services;
+package com.example.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.entities.Book;
-import com.example.entities.LendBook;
+import com.example.demo.entities.Book;
+import com.example.demo.entities.LendBook;
 
 @Service
 public class LendBookService {

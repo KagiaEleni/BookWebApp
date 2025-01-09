@@ -1,4 +1,4 @@
-package com.example.services;
+package com.example.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.entities.Author;
-import com.example.entities.Book;
+import com.example.demo.entities.Author;
+import com.example.demo.entities.Book;
 
 @Service
 public class BookService {
@@ -21,9 +21,9 @@ public class BookService {
 	private static List<Book> books = new ArrayList<Book>();
 
 	// Add Book
-	public void addBook(Book book) {
+	public List<Book> addBook(Book book) {
 		books.add(book);
-		this.getAllBooks();
+		return books;
 	}
 	
 	//Find a book by ID
