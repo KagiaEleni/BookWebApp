@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.example.entities.Author;
 import com.example.entities.Book;
-import com.example.entities.Theme;
 
 public class BookService {
 
@@ -17,6 +16,22 @@ public class BookService {
 		books.add(book);
 		this.getAllBooks();
 	}
+	
+	//Find a book by ID
+		public static boolean findBookById(int id) {
+	        Book b = books.stream()
+	                    .filter(book -> book.getId() == id)
+	                    .findFirst()
+	                    .orElse(null);
+	        
+	        if (b != null){
+	            return true;
+	        }
+	        else {
+	            System.out.println("Invalid id");
+	            return false;
+	        }
+	    }
 
 	// Return all Books
 	public List<Book> getAllBooks() {
@@ -29,6 +44,7 @@ public class BookService {
 
 		if (bookToDelete.isPresent()) {
 			books.remove(bookToDelete.get());
+			LendBookService.removeBookFromAll(bookToDelete.get().getId());
 		}
 		this.getAllBooks();
 	}
@@ -83,6 +99,14 @@ public class BookService {
 	public static void removeTheme(int themeId) {
 		for (Book book : books) {
 			book.deleteTheme(themeId);
+		}
+	}
+
+	// Remove an author from a book
+	public static void removeAuthor(int authorId) {
+		for (Book book : books) {
+			if (book.getAuthor().getId() == authorId)
+				book.setAuthor(null);
 		}
 	}
 

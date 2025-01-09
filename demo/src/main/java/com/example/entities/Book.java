@@ -12,7 +12,7 @@ public class Book {
 	private String publisher;
 	private String publishedYear;
 	private String description;
-	List<Theme> themes = new ArrayList<Theme>();
+	private List<Theme> themes = new ArrayList<Theme>();
 
 	public Book(int id, String title, Author author, String publisher, String publishedYear, String description) {
 		this.id = id;
