@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.entities.Book;
+import org.springframework.stereotype.Service;
+
 import com.example.entities.Person;
 
+@Service
 public class PersonService {
 
 	private static List<Person> users = new ArrayList<Person>();
