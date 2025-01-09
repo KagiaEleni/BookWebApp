@@ -13,10 +13,9 @@ import com.example.demo.entities.Book;
 public class BookService {
 
 	/*
-	 * @Autowired
-	 * AuthorServices authorService
-	 * @Autowired
-	 * ThemeServices themeService
+	 * @Autowired AuthorServices authorService
+	 * 
+	 * @Autowired ThemeServices themeService
 	 */
 	private static List<Book> books = new ArrayList<Book>();
 
@@ -25,22 +24,30 @@ public class BookService {
 		books.add(book);
 		return books;
 	}
-	
-	//Find a book by ID
-		public static boolean findBookById(int id) {
-	        Book b = books.stream()
-	                    .filter(book -> book.getId() == id)
-	                    .findFirst()
-	                    .orElse(null);
-	        
-	        if (b != null){
-	            return true;
-	        }
-	        else {
-	            System.out.println("Invalid id");
-	            return false;
-	        }
-	    }
+
+	// Find a book by ID
+	public static boolean findBookById(int id) {
+		Book b = books.stream().filter(book -> book.getId() == id).findFirst().orElse(null);
+
+		if (b != null) {
+			return true;
+		} else {
+			System.out.println("Invalid id");
+			return false;
+		}
+	}
+
+	// Return a book by ID
+	public static Book returnBookById(int id) {
+		Book b = books.stream().filter(book -> book.getId() == id).findFirst().orElse(null);
+
+		if (b != null) {
+			return b;
+		} else {
+			System.out.println("Invalid id");
+			return null;
+		}
+	}
 
 	// Return all Books
 	public List<Book> getAllBooks() {
@@ -48,18 +55,18 @@ public class BookService {
 	}
 
 	// Delete Book
-	public void deleteBook(Book book) {
-		Optional<Book> bookToDelete = books.stream().filter(books -> books.getId() == book.getId()).findFirst();
+	public List<Book> deleteBook(int id) {
+		Optional<Book> bookToDelete = books.stream().filter(books -> books.getId() == id).findFirst();
 
 		if (bookToDelete.isPresent()) {
 			books.remove(bookToDelete.get());
 			LendBookService.removeBookFromAll(bookToDelete.get().getId());
 		}
-		this.getAllBooks();
+		return books;
 	}
 
 	// Update Book
-	public void updateBook(int id, String title, Author author, String publisher, String publishedYear,
+	public List<Book> updateBook(int id, String title, Author author, String publisher, String publishedYear,
 			String description) {
 
 		for (Book book : books) {
@@ -76,7 +83,7 @@ public class BookService {
 					book.setDescription(description);
 			}
 		}
-		this.getAllBooks();
+		return books;
 
 	}
 

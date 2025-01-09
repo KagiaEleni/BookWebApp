@@ -10,52 +10,46 @@ import com.example.demo.entities.Author;
 
 @Service
 public class AuthorService {
-	
+
 	private List<Author> authors = new ArrayList<Author>();
-	
-	//Return all Authors
+
+	// Return all Authors
 	public List<Author> getAllAuthors() {
 		return authors;
 	}
-	
-	//Find an author by ID
+
+	// Find an author by ID
 	public Author findAuthorById(int id) {
-        Author a = authors.stream()
-                    .filter(author -> author.getId() == id)
-                    .findFirst()
-                    .orElse(null);
-        
-        if (a != null){
-            return a;
-        }
-        else {
-            System.out.println("Invalid id");
-            return null;
-        }
-    }
-	
-	//Add an author
-	public void addAuthor(Author author) {
-		authors.add(author);
-		this.getAllAuthors();
+		Author a = authors.stream().filter(author -> author.getId() == id).findFirst().orElse(null);
+
+		if (a != null) {
+			return a;
+		} else {
+			System.out.println("Invalid id");
+			return null;
+		}
 	}
-	
-	//Delete an author
-	public void deleteAuthor(Author author) {
-		Optional<Author> authorToDelete = authors.stream()
-                .filter(authors -> authors.getId() == author.getId())
-                .findFirst();
+
+	// Add an author
+	public List<Author> addAuthor(Author author) {
+		authors.add(author);
+		return authors;
+	}
+
+	// Delete an author
+	public List<Author> deleteAuthor(int id) {
+		Optional<Author> authorToDelete = authors.stream().filter(authors -> authors.getId() == id).findFirst();
 
 		if (authorToDelete.isPresent()) {
 			authors.remove(authorToDelete.get());
 		}
-		this.getAllAuthors();
-	} 
-	
-	//Update an Author
-	public void updateAuthor(int id, String firstName, String lastName, String DateOfBirth) {
-		for(Author author: authors) {
-			if(author.getId() == id) {
+		return authors;
+	}
+
+	// Update an Author
+	public List<Author> updateAuthor(int id, String firstName, String lastName, String DateOfBirth) {
+		for (Author author : authors) {
+			if (author.getId() == id) {
 				if (firstName != null)
 					author.setFirstName(firstName);
 				if (lastName != null)
@@ -64,7 +58,7 @@ public class AuthorService {
 					author.setDateOfBirth(DateOfBirth);
 			}
 		}
-		this.getAllAuthors();
+		return authors;
 	}
 
 }

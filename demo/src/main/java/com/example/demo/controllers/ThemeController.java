@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
 import java.util.List;
 
@@ -19,12 +19,10 @@ import com.example.demo.services.ThemeService;
 
 @RestController
 @RequestMapping("themes")
-public class Controller {
+public class ThemeController {
 	
 	@Autowired
 	ThemeService themeService;
-	@Autowired
-	BookService bookService;
 
 	@GetMapping("/hello")
 	public String hello() {
@@ -49,16 +47,6 @@ public class Controller {
 	@PutMapping("/putTheme")
 	public List<Theme> putTheme(@RequestBody Theme theme) {
 		return themeService.updateTheme(theme.getId(), theme.getName(), theme.getDescription());
-	}
-	
-	@GetMapping("/allBooks")
-	public List<Book> getAllBooks() {
-		return bookService.getAllBooks();
-	}
-	
-	@PostMapping("/add")
-	public List<Book> addBooks(@RequestBody Book book){
-		return bookService.addBook(book);
 	}
 	
 }

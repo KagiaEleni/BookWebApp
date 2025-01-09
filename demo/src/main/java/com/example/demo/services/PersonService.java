@@ -42,7 +42,7 @@ public class PersonService {
 	}
 
 	// Update user
-	public void updateUser(int id, String firstName, String lastName) {
+	public List<Person> updateUser(int id, String firstName, String lastName) {
 
 		for (Person user : users) {
 			if (user.getId() == id) {
@@ -52,20 +52,23 @@ public class PersonService {
 					user.setLastName(lastName);
 			}
 		}
+		return users;
 	}
 
 	// Delete user
-	public void deleteUser(int userId) {
+	public List<Person> deleteUser(int userId) {
 		Optional<Person> userToDelete = users.stream().filter(user -> user.getId() == userId).findFirst();
 
 		if (userToDelete.isPresent()) {
 			users.remove(userToDelete.get());
 		}
+		return users;
 	}
 
 	// Add user
-	public void addUser(Person user) {
+	public List<Person> addUser(Person user) {
 		users.add(user);
+		return users;
 	}
 
 }

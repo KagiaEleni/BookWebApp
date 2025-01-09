@@ -20,19 +20,23 @@ public class LendBookService {
 	}
 
 	// The user borrows a book
-	public void borrowBook(int userId, Book book) {
-		if (BookService.findBookById(book.getId()) && PersonService.findUserById(userId))
-			borrowedBooks.add(new LendBook(PersonService.getUserById(userId), book));
+	public List<LendBook> borrowBook(int userId, int bookId) {
+		if (BookService.findBookById(bookId) && PersonService.findUserById(userId))
+			borrowedBooks.add(new LendBook(PersonService.getUserById(userId), BookService.returnBookById(bookId)));
+		
+		return borrowedBooks;
 	}
 
 	// The user returns a book
-	public void returnBook(int userId, int bookId) {
+	public List<LendBook> returnBook(int userId, int bookId) {
 		Optional<LendBook> userWhoReturns = borrowedBooks.stream().filter(user -> user.getUser().getId() == userId)
 				.filter(book -> book.getBorrowedBook().getId() == bookId).findFirst();
 
 		if (userWhoReturns.isPresent()) {
 			borrowedBooks.remove(userWhoReturns.get());
 		}
+		
+		return borrowedBooks;
 
 	}
 
