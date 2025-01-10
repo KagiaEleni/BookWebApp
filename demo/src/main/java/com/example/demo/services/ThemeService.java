@@ -11,7 +11,7 @@ import com.example.demo.entities.Theme;
 @Service
 public class ThemeService {
 
-	private List<Theme> themes = new ArrayList<Theme>();
+	private static List<Theme> themes = new ArrayList<Theme>();
 
 	// Return all Themes
 	public List<Theme> getAllThemes() {
@@ -48,7 +48,7 @@ public class ThemeService {
 		return themes;
 	}
 
-	public Theme findThemeById(int id) {
+	public static Theme findThemeById(int id) {
 		Theme t = themes.stream().filter(theme -> theme.getId() == id).findFirst().orElse(null);
 
 		if (t != null) {

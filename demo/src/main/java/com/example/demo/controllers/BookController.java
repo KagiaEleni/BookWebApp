@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Book;
 import com.example.demo.services.BookService;
+import com.example.demo.services.ThemeService;
 
 @RestController
 @RequestMapping("books")
@@ -21,6 +22,8 @@ public class BookController {
 
 	@Autowired
 	BookService bookService;
+	@Autowired
+	ThemeService themeService;
 	
 	@GetMapping("/allBooks")
 	public List<Book> getAllBooks() {
@@ -40,5 +43,10 @@ public class BookController {
 	@PutMapping("/putBook")
 	public List<Book> putBook(@RequestBody Book book) {
 		return bookService.updateBook(book.getId(), book.getTitle(), book.getAuthor(), book.getPublisher(), book.getPublishedYear(), book.getDescription());
+	}
+	
+	@PostMapping("/addTheme")
+	public List<Book> addTheme(@RequestParam Integer bookId, Integer themeId){
+		return bookService.addTheme(bookId, themeId);
 	}
 }

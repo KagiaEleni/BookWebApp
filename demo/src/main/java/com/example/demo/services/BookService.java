@@ -100,15 +100,14 @@ public class BookService {
 	}
 
 	// Add a theme to a book
-	public void addTheme(int bookId, int themeID, ThemeService themeService) {
-
-		ThemeService theme = themeService;
-
+	public List<Book> addTheme(int bookId, int themeID) {
 		for (Book book : books) {
 			if (book.getId() == bookId) {
-				book.addATheme(theme.findThemeById(themeID));
+				book.addATheme(ThemeService.findThemeById(themeID));
 			}
 		}
+		
+		return books;
 	}
 
 	// Remove a theme from a book
