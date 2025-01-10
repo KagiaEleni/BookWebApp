@@ -1,33 +1,41 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Author;
 import com.example.demo.entities.Book;
+import com.example.demo.repositories.BookRepository;
 
 @Service
 public class BookService {
 
-	/*
-	 * @Autowired AuthorServices authorService
-	 * 
-	 * @Autowired ThemeServices themeService
-	 */
-	private static List<Book> books = new ArrayList<Book>();
+	@Autowired
+	AuthorService authorService;
+
+	@Autowired
+	ThemeService themeService;
+	
+	@Autowired
+	LendBookService lendBookService;
+
+	// private static List<Book> books = new ArrayList<Book>();
+
+	@Autowired
+	BookRepository repository;
 
 	// Add Book
 	public List<Book> addBook(Book book) {
-		books.add(book);
-		return books;
+		repository.save(book);
+		return this.getAllBooks();
 	}
 
 	// Find a book by ID
-	public static boolean findBookById(int id) {
-		Book b = books.stream().filter(book -> book.getId() == id).findFirst().orElse(null);
+	public boolean findBookById(int id) {
+		Book b = repository.findAll().stream().filter(book -> book.getId() == id).findFirst().orElse(null);
 
 		if (b != null) {
 			return true;
@@ -38,8 +46,8 @@ public class BookService {
 	}
 
 	// Return a book by ID
-	public static Book returnBookById(int id) {
-		Book b = books.stream().filter(book -> book.getId() == id).findFirst().orElse(null);
+	public Book returnBookById(int id) {
+		Book b = repository.findAll().stream().filter(book -> book.getId() == id).findFirst().orElse(null);
 
 		if (b != null) {
 			return b;
@@ -51,25 +59,25 @@ public class BookService {
 
 	// Return all Books
 	public List<Book> getAllBooks() {
-		return books;
+		return repository.findAll();
 	}
 
 	// Delete Book
 	public List<Book> deleteBook(int id) {
-		Optional<Book> bookToDelete = books.stream().filter(books -> books.getId() == id).findFirst();
+		Optional<Book> bookToDelete = repository.findAll().stream().filter(books -> books.getId() == id).findFirst();
 
 		if (bookToDelete.isPresent()) {
-			books.remove(bookToDelete.get());
-			LendBookService.removeBookFromAll(bookToDelete.get().getId());
+			repository.delete(bookToDelete.get());
+			lendBookService.removeBookFromAll(bookToDelete.get().getId());
 		}
-		return books;
+		return this.getAllBooks();
 	}
 
 	// Update Book
 	public List<Book> updateBook(int id, String title, Author author, String publisher, String publishedYear,
 			String description) {
 
-		for (Book book : books) {
+		for (Book book : repository.findAll()) {
 			if (book.getId() == id) {
 				if (title != null)
 					book.setTitle(title);
@@ -83,7 +91,7 @@ public class BookService {
 					book.setDescription(description);
 			}
 		}
-		return books;
+		return this.getAllBooks();
 
 	}
 
@@ -92,7 +100,7 @@ public class BookService {
 
 		AuthorService author = aService;
 
-		for (Book book : books) {
+		for (Book book : repository.findAll()) {
 			if (book.getId() == bookId) {
 				book.setAuthor(author.findAuthorById(authorId));
 			}
@@ -101,25 +109,25 @@ public class BookService {
 
 	// Add a theme to a book
 	public List<Book> addTheme(int bookId, int themeID) {
-		for (Book book : books) {
+		for (Book book : repository.findAll()) {
 			if (book.getId() == bookId) {
-				book.addATheme(ThemeService.findThemeById(themeID));
+				book.addATheme(themeService.findThemeById(themeID));
 			}
 		}
-		
-		return books;
+
+		return this.getAllBooks();
 	}
 
 	// Remove a theme from a book
-	public static void removeTheme(int themeId) {
-		for (Book book : books) {
+	public void removeTheme(int themeId) {
+		for (Book book : repository.findAll()) {
 			book.deleteTheme(themeId);
 		}
 	}
 
 	// Remove an author from a book
-	public static void removeAuthor(int authorId) {
-		for (Book book : books) {
+	public void removeAuthor(int authorId) {
+		for (Book book : repository.findAll()) {
 			if (book.getAuthor().getId() == authorId)
 				book.setAuthor(null);
 		}

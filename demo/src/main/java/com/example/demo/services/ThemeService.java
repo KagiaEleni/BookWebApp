@@ -1,43 +1,49 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Theme;
+import com.example.demo.repositories.ThemeRepository;
 
 @Service
 public class ThemeService {
 
-	private static List<Theme> themes = new ArrayList<Theme>();
+	@Autowired
+	BookService bookService;
+	
+	@Autowired
+	ThemeRepository repository;
+	//private static List<Theme> themes = new ArrayList<Theme>();
 
 	// Return all Themes
 	public List<Theme> getAllThemes() {
-		return themes;
+		return repository.findAll();
 	}
 
 	// Add theme
 	public List<Theme> addTheme(Theme theme) {
-		themes.add(theme);
-		return themes;
+		repository.save(theme);
+		return this.getAllThemes();
 	}
 
 	// Delete theme
 	public List<Theme> deleteTheme(int id) {
-		Optional<Theme> themeToDelete = themes.stream().filter(themes -> themes.getId() == id).findFirst();
+		Optional<Theme> themeToDelete = repository.findAll().stream().filter(themes -> themes.getId() == id).findFirst();
 
 		if (themeToDelete.isPresent()) {
-			themes.remove(themeToDelete.get());
-			BookService.removeTheme(id);
+			repository.delete(themeToDelete.get());
+			bookService.removeTheme(id);
 		}
-		return themes;
+		return this.getAllThemes();
 	}
 
 	// Update theme
 	public List<Theme> updateTheme(int id, String name, String description) {
-		for (Theme theme : themes) {
+		for (Theme theme : repository.findAll()) {
 			if (theme.getId() == id) {
 				if (name != null)
 					theme.setName(name);
@@ -45,11 +51,11 @@ public class ThemeService {
 					theme.setDescription(description);
 			}
 		}
-		return themes;
+		return repository.findAll();
 	}
 
-	public static Theme findThemeById(int id) {
-		Theme t = themes.stream().filter(theme -> theme.getId() == id).findFirst().orElse(null);
+	public Theme findThemeById(int id) {
+		Theme t = repository.findAll().stream().filter(theme -> theme.getId() == id).findFirst().orElse(null);
 
 		if (t != null) {
 			return t;

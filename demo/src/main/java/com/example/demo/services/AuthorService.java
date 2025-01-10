@@ -1,26 +1,29 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Author;
+import com.example.demo.repositories.AuthorRepository;
 
 @Service
 public class AuthorService {
 
-	private List<Author> authors = new ArrayList<Author>();
+	@Autowired 
+	AuthorRepository repository;
+	//private List<Author> authors = new ArrayList<Author>();
 
 	// Return all Authors
 	public List<Author> getAllAuthors() {
-		return authors;
+		return repository.findAll();
 	}
 
 	// Find an author by ID
 	public Author findAuthorById(int id) {
-		Author a = authors.stream().filter(author -> author.getId() == id).findFirst().orElse(null);
+		Author a = repository.findAll().stream().filter(author -> author.getId() == id).findFirst().orElse(null);
 
 		if (a != null) {
 			return a;
@@ -32,23 +35,23 @@ public class AuthorService {
 
 	// Add an author
 	public List<Author> addAuthor(Author author) {
-		authors.add(author);
-		return authors;
+		repository.save(author);
+		return this.getAllAuthors();
 	}
 
 	// Delete an author
 	public List<Author> deleteAuthor(int id) {
-		Optional<Author> authorToDelete = authors.stream().filter(authors -> authors.getId() == id).findFirst();
+		Optional<Author> authorToDelete = repository.findAll().stream().filter(authors -> authors.getId() == id).findFirst();
 
 		if (authorToDelete.isPresent()) {
-			authors.remove(authorToDelete.get());
+			repository.delete(authorToDelete.get());
 		}
-		return authors;
+		return this.getAllAuthors();
 	}
 
 	// Update an Author
 	public List<Author> updateAuthor(int id, String firstName, String lastName, String DateOfBirth) {
-		for (Author author : authors) {
+		for (Author author : repository.findAll()) {
 			if (author.getId() == id) {
 				if (firstName != null)
 					author.setFirstName(firstName);
@@ -58,7 +61,7 @@ public class AuthorService {
 					author.setDateOfBirth(DateOfBirth);
 			}
 		}
-		return authors;
+		return this.getAllAuthors();
 	}
 
 }

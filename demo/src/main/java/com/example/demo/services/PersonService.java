@@ -1,26 +1,29 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Person;
+import com.example.demo.repositories.PersonRepository;
 
 @Service
 public class PersonService {
 
-	private static List<Person> users = new ArrayList<Person>();
+	@Autowired
+	PersonRepository repository;
+	//private static List<Person> users = new ArrayList<Person>();
 
 	// Get all users
 	public List<Person> getAllUsers() {
-		return users;
+		return repository.findAll();
 	}
 
 	// Find a person by ID
-	public static boolean findUserById(int id) {
-		Person u = users.stream().filter(user -> user.getId() == id).findFirst().orElse(null);
+	public boolean findUserById(int id) {
+		Person u = repository.findAll().stream().filter(user -> user.getId() == id).findFirst().orElse(null);
 
 		if (u != null) {
 			return true;
@@ -31,8 +34,8 @@ public class PersonService {
 	}
 
 	// Get user by Id
-	public static Person getUserById(int userId) {
-		Optional<Person> userById = users.stream().filter(user -> user.getId() == userId).findFirst();
+	public Person getUserById(int userId) {
+		Optional<Person> userById = repository.findAll().stream().filter(user -> user.getId() == userId).findFirst();
 
 		if (userById.isPresent()) {
 			return userById.get();
@@ -44,7 +47,7 @@ public class PersonService {
 	// Update user
 	public List<Person> updateUser(int id, String firstName, String lastName) {
 
-		for (Person user : users) {
+		for (Person user : repository.findAll()) {
 			if (user.getId() == id) {
 				if (firstName != null)
 					user.setFirstName(firstName);
@@ -52,23 +55,23 @@ public class PersonService {
 					user.setLastName(lastName);
 			}
 		}
-		return users;
+		return this.getAllUsers();
 	}
 
 	// Delete user
 	public List<Person> deleteUser(int userId) {
-		Optional<Person> userToDelete = users.stream().filter(user -> user.getId() == userId).findFirst();
+		Optional<Person> userToDelete = repository.findAll().stream().filter(user -> user.getId() == userId).findFirst();
 
 		if (userToDelete.isPresent()) {
-			users.remove(userToDelete.get());
+			repository.delete(userToDelete.get());
 		}
-		return users;
+		return this.getAllUsers();
 	}
 
 	// Add user
 	public List<Person> addUser(Person user) {
-		users.add(user);
-		return users;
+		repository.save(user);
+		return this.getAllUsers();
 	}
 
 }
