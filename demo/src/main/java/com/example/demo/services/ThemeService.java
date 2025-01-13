@@ -12,8 +12,8 @@ import com.example.demo.repositories.ThemeRepository;
 @Service
 public class ThemeService {
 
-	@Autowired
-	BookService bookService;
+//	@Autowired
+//	BookService bookService;
 	
 	@Autowired
 	ThemeRepository repository;
@@ -30,16 +30,16 @@ public class ThemeService {
 		return this.getAllThemes();
 	}
 
-	// Delete theme
-	public List<Theme> deleteTheme(int id) {
-		Optional<Theme> themeToDelete = repository.findAll().stream().filter(themes -> themes.getId() == id).findFirst();
-
-		if (themeToDelete.isPresent()) {
-			repository.delete(themeToDelete.get());
-			bookService.removeTheme(id);
-		}
-		return this.getAllThemes();
-	}
+//	// Delete theme
+//	public List<Theme> deleteTheme(int id) {
+//		Optional<Theme> themeToDelete = repository.findAll().stream().filter(themes -> themes.getId() == id).findFirst();
+//
+//		if (themeToDelete.isPresent()) {
+//			repository.delete(themeToDelete.get());
+//			bookService.removeTheme(id);
+//		}
+//		return this.getAllThemes();
+//	}
 
 	// Update theme
 	public List<Theme> updateTheme(int id, String name, String description) {
