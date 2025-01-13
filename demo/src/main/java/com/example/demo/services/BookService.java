@@ -19,8 +19,8 @@ public class BookService {
 	@Autowired
 	ThemeService themeService;
 	
-	@Autowired
-	LendBookService lendBookService;
+//	@Autowired
+//	LendBookService lendBookService;
 
 	// private static List<Book> books = new ArrayList<Book>();
 
@@ -68,7 +68,7 @@ public class BookService {
 
 		if (bookToDelete.isPresent()) {
 			repository.delete(bookToDelete.get());
-			lendBookService.removeBookFromAll(bookToDelete.get().getId());
+			//lendBookService.removeBookFromAll(bookToDelete.get().getId());
 		}
 		return this.getAllBooks();
 	}
