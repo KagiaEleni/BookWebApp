@@ -39,10 +39,10 @@ public class ThemeController {
 		return themeService.addTheme(theme);
 	}
 	
-	@DeleteMapping("/deleteTheme")
-	public List<Theme> deleteTheme(@RequestParam Integer id){
-		return themeService.deleteTheme(id);
-	}
+//	@DeleteMapping("/deleteTheme")
+//	public List<Theme> deleteTheme(@RequestParam Integer id){
+//		return themeService.deleteTheme(id);
+//	}
 	
 	@PutMapping("/putTheme")
 	public List<Theme> putTheme(@RequestBody Theme theme) {
