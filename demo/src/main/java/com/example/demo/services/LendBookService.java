@@ -28,9 +28,9 @@ public class LendBookService {
 	}
 
 	// The user borrows a book
-	public List<LendBook> borrowBook(int userId, int bookId) {
+	public List<LendBook> borrowBook(int lendId, int userId, int bookId) {
 		if (bookService.findBookById(bookId) && personService.findUserById(userId))
-			repository.save(new LendBook(personService.getUserById(userId), bookService.returnBookById(bookId)));
+			repository.save(new LendBook(lendId, personService.getUserById(userId), bookService.returnBookById(bookId)));
 		
 		return this.getAllLendBooks();
 	}

@@ -1,6 +1,5 @@
 package com.example.demo.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,10 +38,20 @@ public class Book {
 	@Column(name = "description", nullable = true)
 	private String description;
 	
-	@Column(name = "author", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "author_id", nullable = true)
 	private Author author;
 
-	private List<Theme> themes = new ArrayList<Theme>();
+	@ManyToMany
+	@JoinTable(name = "book_themes_map", // Join table name
+			joinColumns = @JoinColumn(name = "book_id"), // Foreign key for Book
+			inverseJoinColumns = @JoinColumn(name = "theme_id") // Foreign key for Theme
+	)
+	private List<Theme> themes;
+	
+	public Book() {
+		
+	}
 
 	public Book(int id, String title, Author author, String publisher, String publishedYear, String description) {
 		this.id = id;

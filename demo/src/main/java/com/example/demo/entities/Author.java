@@ -28,6 +28,10 @@ public class Author {
 	@Column(name = "dateOfBirth", nullable = true)
 	private String dateOfBirth;
 	
+	public Author() {
+		
+	}
+	
 	public Author(int id, String firstName, String lastName, String dateOfBirth) {
 		super();
 		this.id = id;

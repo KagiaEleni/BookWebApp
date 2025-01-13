@@ -26,8 +26,8 @@ public class LendBookController {
 	}
 	
 	@PostMapping("/addLendBook")
-	public List<LendBook> addBooks(@RequestParam Integer userId, Integer bookId){
-		return lendBookService.borrowBook(userId, bookId);
+	public List<LendBook> addBooks(@RequestParam Integer lendId, Integer userId, Integer bookId){
+		return lendBookService.borrowBook(lendId, userId, bookId);
 	}
 	
 	@DeleteMapping("/returnLendBook")

@@ -25,6 +25,10 @@ public class Person {
 	@Column(name = "lastName", nullable = false)
 	private String lastName;
 
+	public Person() {
+		
+	}
+	
 	public Person(int id, String firstName, String lastName) {
 		super();
 		this.id = id;

@@ -25,7 +25,11 @@ public class Theme {
 	@Column(name = "description", nullable = true)
 	private String description;
 	
-	public Theme(int id, String name, String description) {
+	public Theme() {
+		
+	}
+	
+ 	public Theme(int id, String name, String description) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
